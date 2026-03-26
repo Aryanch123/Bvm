@@ -1,0 +1,19 @@
+[
+  {
+    "id": "hospital-bed-001",
+    "name": "Semi Fowler Hospital Bed",
+    "category": "Hospital Beds",
+    "image": "/images/bed1.jpg",
+    "description": "High quality adjustable hospital bed.",
+    "features": [
+      "Adjustable backrest",
+      "Powder coated frame",
+      "Side railings"
+    ],
+    "specifications": {
+      "Material": "Mild Steel",
+      "Load Capacity": "150kg",
+      "Finish": "Powder Coated"
+    }
+  }
+]
