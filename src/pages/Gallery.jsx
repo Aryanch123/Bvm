@@ -1,69 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
+import { getSiteImages } from '../services/api';
 
-const galleryImages = [
-    {
-        id: 1,
-        category: 'Factory',
-        title: 'Automated Assembly Line',
-        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAVbBj8EDHBq776Iobs8sYuvuzE84hS0PrBYJLb_TNrBPvcOZw7_f1eYA0TK4sWefEnQM-jUMxAJvWF1yTm29sKO6LzbcZynVllVd5Bu4GSpnkGLXWjUo2-pJNt4w7OpcM0Z40Lkcb3cec_EdjAmgEHk129gsEAPDtKIQ5MdPOGbXeS0u90OFlRLR-WTzJypzAGnAuGN08qqwnkFQGSJYtklxulfKFiwwI5tZq-_JLWsr2lsziIFOXNi-R9RFC37uzOBHxaCLgEPBw',
-        alt: 'High-tech automated manufacturing line for medical devices'
-    },
-    {
-        id: 2,
-        category: 'Products',
-        title: 'Surgical Light Precision',
-        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCRLi_Jg4LA73mYKDGUm6FUQrGNbfpPjgf35A2AjmZ1MftD2TuKYujgnAwFzKj9MVXxC98gzBOTHufZgfMmYgM9R9B_L3ltLrlkEWVG8-i73OWuvyRHK-bs5c94RTuGHIRXw027egjArnUUDbZMOhBPmggiJx485Ov7qApmCNt8y4ChQC2UAGHXGx1lglpgq-nTTTM11g2fSgvlq0xyzHpPESxF4kz5RSkuKc0oQaU3J82teydGMLPtMSaNpphyHSq7f7svtREW9eI',
-        alt: 'Close up of surgical light details'
-    },
-    {
-        id: 3,
-        category: 'Installations',
-        title: 'ICU Suite Setup - Tokyo',
-        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLvY6xaqZHtgAF5RaRtCBsGN3G2e3qkaBIjMJgA6LLZmkehWp_OQDtsNlLDVY58mOW82wqaTVg-XE3qCN-p9jaeoGwKBuC0x9pWtA7aLCwMmBvvS0-GuaEJKCnzzAwZTrlVapu_oTo5iL4MIF6NotkduPx6ZbKxrElrXYFw28-L4UF8GzQf-pMifSpgfqgXemQHldUd4rZMSjyTD5t10cKzel73uFgH-7ZyaZa0tFHxjOXKJnx4Cokpq9nr9_A039n_eaCuiZlz3g',
-        alt: 'Modern hospital room with bed and monitor'
-    },
-    {
-        id: 4,
-        category: 'Products',
-        title: 'Stainless Steel Utility Cart',
-        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCo8xMgyOa1SIjw9mfptHZYNHm4jMcxle73mTzhuiWS9guNNCIjiK5xoAgwFROPz7lMnmjf6b-O3ujPQgXnSZ6zwD140ApTA__qRzJafNBiw1mIZE0iK2u-DT_1Hs3kTrsK6ZloOeqEJPF3jEovKC87L4oxosyUQyWDPOsMAHibw4_lweJAviW3aEERhmFfPtwC93oo2H4alpFJcJem9f3jg-QNZs7A4hjb2vAaNCeGu9bfYA6x52958xZVCjS19N2PHxLjJJsh2Ao',
-        alt: 'Sterile medical cart with supplies'
-    },
-    {
-        id: 5,
-        category: 'Installations',
-        title: 'Advanced Diagnostics Lab',
-        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDMPNfAM1DMADb_QVWhqg1sk-_7KF_ZVIVqtbSG_i03GMGaA2mc6R2J0--I1sZ4K6DfW-z5Q1PrcorOF0OkxY4vlobT2lOV-cpvt6gLHWcgYQYdghI3kLDjC43jdzH9fuBKwfbEhwpVUzGfavtGl9-GuF0F9rLyWUJeWoIgigY5hcQhz72L7VlcO88TW7-vuo9P6cpLfIDUmR7a7l5MOU1cakiq8w0jJpovbHDkfB1rL_ZIDk6qXaY6pnaedPxSPTEeLPTPh7ViNAI',
-        alt: 'Vertical shot of medical device interface',
-        isVertical: true
-    },
-    {
-        id: 6,
-        category: 'Factory',
-        title: 'Design & Engineering Dept.',
-        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAdCC1BkJs4OW5EPZrzOyVHFgaMqrbG8JUSEAgwexOYaf32YhUAWIaESPBLg3V5ggJo2KM1dEZW800XBdLV5ynFBWZrvIobPorZEVe7vt_VMjMC9G21Ai73UzjU4LyH78-8Wa99f5_ZOtdRLOUU0XKmT0CoQRWvjoSV3q-v_gvp52u53mVy1CGwW7k7Tavi-aSIpsLVUtDMbJJhPwhDfRfX9UheFgyDNeRrGM6-eUBkcpAjTkemZHfhy3E1b5ZYJQFFGGgJ42hoe80',
-        alt: 'Engineering blueprint on table',
-        isAspectVideo: true
-    },
-    {
-        id: 7,
-        category: 'Products',
-        title: 'Patient Chair Mechanism',
-        src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBRQT2uqQsi4qw3Tt7BNVdJuqkvtBdHe-ZVtynGKQBMiBlzj0oVgo-U1F1N866IXLhmnXwXBPUpRJ82xXdfR0gXG9Mt0dOnEWEJfQfp8BaxaLWWt-LiMAypqUe0w1i-bKA_aUHfmtjhnuG4_TigPFMaMIMaFmxjPjaKhJQnSiRXDNfxdC7_Y3ynHn7KgL2N5WtzXWRzDZ3zJuMRwwL49nRO7VF85fcTGtsI1-eSsyKHGmE75ZsopQOyoZ5Xkm5y_ig7um0I6TWzvoE',
-        alt: 'Medical chair details',
-        isAspectSquare: true
-    }
-];
 
 const Gallery = () => {
-    const [filter, setFilter] = useState('All Images');
     const [selectedImage, setSelectedImage] = useState(null);
+    const [apiImages, setApiImages] = useState([]);
 
-    const filteredImages = filter === 'All Images'
-        ? galleryImages
-        : galleryImages.filter(img => img.category === filter);
+    useEffect(() => {
+        getSiteImages('gallery')
+            .then(r => {
+                const imgs = (r.data.data || []).map(img => ({
+                    id: img._id,
+                    category: 'Gallery',
+                    title: img.label,
+                    src: img.url,
+                    alt: img.label,
+                    order: img.order,
+                    isApi: true,
+                }));
+                setApiImages(imgs);
+            })
+            .catch(() => {});
+    }, []);
+
 
     return (
         <>
@@ -80,25 +41,12 @@ const Gallery = () => {
 
             <section className="py-12 bg-background-light dark:bg-background-dark min-h-screen">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Filters */}
-                    <div className="flex flex-wrap justify-center gap-2 mb-12">
-                        {['All Images', 'Products', 'Factory', 'Installations'].map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => setFilter(cat)}
-                                className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${filter === cat
-                                    ? 'bg-primary text-white shadow-md shadow-primary/20 hover:bg-primary-dark'
-                                    : 'bg-white dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700 hover:border-primary/50 hover:text-primary dark:hover:text-primary'
-                                    }`}
-                            >
-                                {cat}
-                            </button>
-                        ))}
-                    </div>
-
+                    {apiImages.length === 0 && (
+					<FadeIn className="text-center py-20 text-neutral-500">No images uploaded yet.</FadeIn>
+				)}
                     {/* Masonry Grid Simulation */}
                     <StaggerContainer staggerDelay={0.05} className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-                        {filteredImages.map((image) => (
+                        {apiImages.map((image) => (
                             <StaggerItem
                                 key={image.id}
                                 className="break-inside-avoid group relative cursor-pointer overflow-hidden rounded-lg shadow-sm hover:shadow-hover transition-all duration-300"
@@ -130,19 +78,7 @@ const Gallery = () => {
                             </StaggerItem>
                         ))}
 
-                        {/* Video Thumbnail (Static representation as it has specific styling) */}
-                        {(filter === 'All Images' || filter === 'Factory') && (
-                            <StaggerItem className="break-inside-avoid group relative cursor-pointer overflow-hidden rounded-lg shadow-sm hover:shadow-hover transition-all duration-300">
-                                <div className="bg-neutral-50 dark:bg-neutral-800 p-8 flex flex-col items-center justify-center text-center border border-neutral-100 dark:border-neutral-700 h-64">
-                                    <span className="material-icons-outlined text-5xl text-neutral-300 mb-4">play_circle_outline</span>
-                                    <h3 className="text-lg font-bold text-neutral-800 dark:text-white">Factory Tour Video</h3>
-                                    <p className="text-sm text-neutral-500 mt-2">Watch our ISO certified process</p>
-                                </div>
-                                <div className="absolute inset-0 bg-primary/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span className="material-icons-outlined text-6xl text-white">play_arrow</span>
-                                </div>
-                            </StaggerItem>
-                        )}
+
                     </StaggerContainer>
 
                     <div className="mt-12 text-center">

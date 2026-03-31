@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import logo from '../../assets/images/bvmlogo.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,11 +20,14 @@ const Navbar = () => {
                 <div className="flex justify-between h-20 items-center">
                     {/* Logo */}
                     <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-                        <div className="w-8 h-8 bg-primary rounded flex items-center justify-center text-white">
-                            <span className="material-icons-outlined text-xl">medical_services</span>
-                        </div>
+                        <img
+                            src={logo}
+                            alt="BVM Industries"
+                            style={{ width: '72px', height: '72px' }}
+                            className="object-contain"
+                        />
                         <span className="font-bold text-xl tracking-tight text-neutral-800 dark:text-white">
-                            Med<span className="text-primary">Tech</span> Mfg.
+                            BVM<span className="text-primary">Industries</span> 
                         </span>
                     </Link>
 

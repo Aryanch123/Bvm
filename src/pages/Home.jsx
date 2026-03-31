@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/sections/HeroSection';
 import TrustIndicators from '../components/sections/TrustIndicators';
@@ -5,9 +6,19 @@ import TrustedInstitutions from '../components/sections/TrustedInstitutions';
 import FeatureSection from '../components/sections/FeatureSection';
 import CTASection from '../components/sections/CTASection';
 import ProductCategoryCard from '../components/ui/ProductCategoryCard';
-import { categories } from '../data/products';
+import { getCategories } from '../services/api';
 
 const Home = () => {
+    const [categories, setCategories] = useState([]);
+    const [loadingCategories, setLoadingCategories] = useState(true);
+
+    useEffect(() => {
+        getCategories()
+            .then((response) => setCategories(response.data.data))
+            .catch(() => setCategories([]))
+            .finally(() => setLoadingCategories(false));
+    }, []);
+
     return (
         <>
             <HeroSection />
@@ -34,11 +45,15 @@ const Home = () => {
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {categories.map((category) => (
-                            <ProductCategoryCard key={category.id} category={category} />
-                        ))}
-                    </div>
+                    {loadingCategories ? (
+                        <div className="py-12 text-center text-neutral-500 dark:text-neutral-400">Loading categories...</div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {categories.map((category) => (
+                                <ProductCategoryCard key={category._id || category.id} category={category} />
+                            ))}
+                        </div>
+                    )}
 
                     <div className="mt-8 text-center md:hidden">
                         <Link

@@ -1,14 +1,29 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FadeIn, SlideInLeft } from '../ui/AnimatedSection';
+import { getSiteImages } from '../../services/api';
+
+const FALLBACK_HERO = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDMPNfAM1DMADb_QVWhqg1sk-_7KF_ZVIVqtbSG_i03GMGaA2mc6R2J0--I1sZ4K6DfW-z5Q1PrcorOF0OkxY4vlobT2lOV-cpvt6gLHWcgYQYdghI3kLDjC43jdzH9fuBKwfbEhwpVUzGfavtGl9-GuF0F9rLyWUJeWoIgigY5hcQhz72L7VlcO88TW7-vuo9P6cpLfIDUmR7a7l5MOU1cakiq8w0jJpovbHDkfB1rL_ZIDk6qXaY6pnaedPxSPTEeLPTPh7ViNAI';
 
 const HeroSection = () => {
+    const [heroSrc, setHeroSrc] = useState(FALLBACK_HERO);
+
+    useEffect(() => {
+        getSiteImages('homepage')
+            .then(r => {
+                const imgs = r.data.data;
+                if (imgs?.length > 0) setHeroSrc(imgs[0].url);
+            })
+            .catch(() => {}); // silently fall back
+    }, []);
+
     return (
         <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-transparent dark:from-background-dark/95 dark:via-background-dark/80 dark:to-transparent z-10 w-full lg:w-3/4"></div>
                 <FadeIn duration={1.5} className="w-full h-full">
                     <img
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMPNfAM1DMADb_QVWhqg1sk-_7KF_ZVIVqtbSG_i03GMGaA2mc6R2J0--I1sZ4K6DfW-z5Q1PrcorOF0OkxY4vlobT2lOV-cpvt6gLHWcgYQYdghI3kLDjC43jdzH9fuBKwfbEhwpVUzGfavtGl9-GuF0F9rLyWUJeWoIgigY5hcQhz72L7VlcO88TW7-vuo9P6cpLfIDUmR7a7l5MOU1cakiq8w0jJpovbHDkfB1rL_ZIDk6qXaY6pnaedPxSPTEeLPTPh7ViNAI"
+                        src={heroSrc}
                         alt="Modern clean hospital ward with advanced medical equipment"
                         className="w-full h-full object-cover object-center transform scale-105"
                     />

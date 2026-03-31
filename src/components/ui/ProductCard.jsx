@@ -11,13 +11,13 @@ const ProductCard = ({ product }) => {
                     <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">New Arrival</span>
                 )}
                 <img
-                    src={product.images[0]}
+                    src={product.images?.[0]?.url || product.images?.[0]}
                     alt={product.title}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 />
             </div>
             <div className="p-6 flex flex-col flex-grow">
-                <div className="mb-2 text-xs font-semibold text-primary uppercase tracking-wide">{product.category}</div>
+                <div className="mb-2 text-xs font-semibold text-primary uppercase tracking-wide">{product.category?.title || product.category}</div>
                 <h3 className="text-lg font-bold text-neutral-800 dark:text-white mb-2 group-hover:text-primary transition-colors">{product.title}</h3>
                 <p className="text-neutral-500 dark:text-neutral-400 text-sm mb-4 line-clamp-2 flex-grow">
                     {product.description}

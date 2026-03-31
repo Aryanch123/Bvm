@@ -1,12 +1,21 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ui/ProductCard';
-import { products, categories } from '../data/products';
+import { getProducts, getCategories } from '../services/api';
 import { FadeIn, SlideInLeft, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
 
 const Products = () => {
 	const [activeCategory, setActiveCategory] = useState('All Products');
 	const [sortBy, setSortBy] = useState('Featured');
+	const [products, setProducts] = useState([]);
+	const [categories, setCategories] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		Promise.all([getProducts(), getCategories()])
+			.then(([p, c]) => { setProducts(p.data.data); setCategories(c.data.data); })
+			.finally(() => setLoading(false));
+	}, []);
 
 	// Derive all category titles
 	const categoryFilters = ['All Products', ...categories.map(c => c.title)];
@@ -14,9 +23,9 @@ const Products = () => {
 	const filteredAndSortedProducts = useMemo(() => {
 		let result = [...products];
 
-		// Filter
+		// Filter — API products have category as object with .title
 		if (activeCategory !== 'All Products') {
-			result = result.filter(p => p.category === activeCategory);
+			result = result.filter(p => p.category?.title === activeCategory);
 		}
 
 		// Sort
@@ -25,18 +34,15 @@ const Products = () => {
 				result.sort((a, b) => a.title.localeCompare(b.title));
 				break;
 			case 'Newest':
-				// For static data, let's treat NewArrivals as newest, or arbitrary if no date
-				result.sort((a, b) => (b.isNewArrival ? 1 : 0) - (a.isNewArrival ? 1 : 0));
+				result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 				break;
 			case 'Featured':
 			default:
-				// Best sellers first, then arbitrary
-				result.sort((a, b) => (b.isBestSeller ? 1 : 0) - (a.isBestSeller ? 1 : 0));
 				break;
 		}
 
 		return result;
-	}, [activeCategory, sortBy]);
+	}, [activeCategory, sortBy, products]);
 
 	return (
 		<>
@@ -57,10 +63,9 @@ const Products = () => {
 							</p>
 						</div>
 						<div className="flex-shrink-0">
-							<a href="#" className="inline-flex items-center justify-center px-6 py-3 border border-neutral-300 dark:border-neutral-600 text-sm font-medium rounded bg-white dark:bg-neutral-800 text-neutral-700 dark:text-white hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-all">
-								<span className="material-icons-outlined mr-2">file_download</span>
-								Download Catalog
-							</a>
+							<Link to="/contact" className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-medium rounded bg-white text-primary hover:bg-neutral-100 transition-all shadow-sm">
+								Contact Sales
+							</Link>
 						</div>
 					</SlideInLeft>
 				</div>
@@ -107,10 +112,12 @@ const Products = () => {
 						</div>
 					</div>
 
-					{filteredAndSortedProducts.length > 0 ? (
+					{loading ? (
+						<FadeIn className="text-center py-20 text-neutral-500">Loading products...</FadeIn>
+					) : filteredAndSortedProducts.length > 0 ? (
 						<StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 							{filteredAndSortedProducts.map(product => (
-								<StaggerItem key={product.id}>
+								<StaggerItem key={product._id}>
 									<ProductCard product={product} />
 								</StaggerItem>
 							))}
@@ -133,14 +140,9 @@ const Products = () => {
 								We specialize in bulk orders and custom manufacturing specifications for hospital networks. Request a tailored quote today.
 							</p>
 						</div>
-						<div className="flex flex-col sm:flex-row gap-4">
-							<a href="#" className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-bold rounded bg-white text-primary hover:bg-neutral-100 transition-colors shadow-lg">
-								Request Bulk Quote
-							</a>
-							<Link to="/contact" className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded bg-transparent text-white hover:bg-white/10 transition-colors">
-								Contact Sales
-							</Link>
-						</div>
+						<Link to="/contact" className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-bold rounded bg-white text-primary hover:bg-neutral-100 transition-colors shadow-lg">
+							Contact Sales
+						</Link>
 					</div>
 				</FadeIn>
 			</section>

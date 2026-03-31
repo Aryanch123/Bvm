@@ -1,7 +1,20 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FadeIn, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
+import ProductCategoryCard from '../components/ui/ProductCategoryCard';
+import { getCategories } from '../services/api';
 
 const Infrastructure = () => {
+    const [categories, setCategories] = useState([]);
+    const [loadingCategories, setLoadingCategories] = useState(true);
+
+    useEffect(() => {
+        getCategories()
+            .then((response) => setCategories(response.data.data))
+            .catch(() => setCategories([]))
+            .finally(() => setLoadingCategories(false));
+    }, []);
+
     return (
         <>
             <section className="relative pt-32 pb-20 lg:pt-0 lg:pb-0 overflow-hidden bg-background-light dark:bg-background-dark min-h-[600px] flex items-center">
@@ -120,75 +133,22 @@ const Infrastructure = () => {
                                 Laser manufacturing enables higher dimensional accuracy, stronger weld joints and better finishing quality. This technology ensures structural strength, consistent product quality and increased production capacity which allows us to efficiently handle institutional and project based orders.
                             </p>
                         </div>
-                        <a href="#" className="hidden md:inline-flex items-center font-medium text-primary hover:text-primary-dark transition-colors">
-                            Download Equipment List <span className="material-icons-outlined ml-1 text-sm">download</span>
-                        </a>
+                        <Link to="/products" className="hidden md:inline-flex items-center font-medium text-primary hover:text-primary-dark transition-colors">
+                            View All Categories <span className="material-icons-outlined ml-1 text-sm">arrow_forward</span>
+                        </Link>
                     </div>
 
-                    <StaggerContainer staggerDelay={0.15} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <StaggerItem className="group rounded-lg overflow-hidden bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-primary/50 transition-all duration-300">
-                            <div className="aspect-[16/10] overflow-hidden">
-                                <img
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo8xMgyOa1SIjw9mfptHZYNHm4jMcxle73mTzhuiWS9guNNCIjiK5xoAgwFROPz7lMnmjf6b-O3ujPQgXnSZ6zwD140ApTA__qRzJafNBiw1mIZE0iK2u-DT_1Hs3kTrsK6ZloOeqEJPF3jEovKC87L4oxosyUQyWDPOsMAHibw4_lweJAviW3aEERhmFfPtwC93oo2H4alpFJcJem9f3jg-QNZs7A4hjb2vAaNCeGu9bfYA6x52958xZVCjS19N2PHxLjJJsh2Ao"
-                                    alt="5-Axis CNC Machine processing metal component"
-                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                                />
-                            </div>
-                            <div className="p-6">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-lg font-bold text-neutral-800 dark:text-white">5-Axis CNC Centers</h3>
-                                    <span className="px-2 py-1 bg-neutral-200 dark:bg-neutral-700 text-xs font-semibold rounded text-neutral-600 dark:text-neutral-300">Germany</span>
-                                </div>
-                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">High-precision milling for complex joint components and surgical instrument parts with micrometer tolerance.</p>
-                                <ul className="text-xs text-neutral-500 dark:text-neutral-400 space-y-1">
-                                    <li className="flex items-center"><span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Tolerance: ±0.005mm</li>
-                                    <li className="flex items-center"><span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>24/7 Automated Operation</li>
-                                </ul>
-                            </div>
-                        </StaggerItem>
-
-                        <StaggerItem className="group rounded-lg overflow-hidden bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-primary/50 transition-all duration-300">
-                            <div className="aspect-[16/10] overflow-hidden">
-                                <img
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRLi_Jg4LA73mYKDGUm6FUQrGNbfpPjgf35A2AjmZ1MftD2TuKYujgnAwFzKj9MVXxC98gzBOTHufZgfMmYgM9R9B_L3ltLrlkEWVG8-i73OWuvyRHK-bs5c94RTuGHIRXw027egjArnUUDbZMOhBPmggiJx485Ov7qApmCNt8y4ChQC2UAGHXGx1lglpgq-nTTTM11g2fSgvlq0xyzHpPESxF4kz5RSkuKc0oQaU3J82teydGMLPtMSaNpphyHSq7f7svtREW9eI"
-                                    alt="Robotic welding arm working on hospital bed frame"
-                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                                />
-                            </div>
-                            <div className="p-6">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-lg font-bold text-neutral-800 dark:text-white">Robotic Welding Cells</h3>
-                                    <span className="px-2 py-1 bg-neutral-200 dark:bg-neutral-700 text-xs font-semibold rounded text-neutral-600 dark:text-neutral-300">Japan</span>
-                                </div>
-                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">Automated TIG/MIG welding for seamless, hygienic joints essential for infection control in hospital furniture.</p>
-                                <ul className="text-xs text-neutral-500 dark:text-neutral-400 space-y-1">
-                                    <li className="flex items-center"><span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Consistent bead quality</li>
-                                    <li className="flex items-center"><span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Thermal distortion control</li>
-                                </ul>
-                            </div>
-                        </StaggerItem>
-
-                        <StaggerItem className="group rounded-lg overflow-hidden bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-primary/50 transition-all duration-300">
-                            <div className="aspect-[16/10] overflow-hidden">
-                                <img
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLvY6xaqZHtgAF5RaRtCBsGN3G2e3qkaBIjMJgA6LLZmkehWp_OQDtsNlLDVY58mOW82wqaTVg-XE3qCN-p9jaeoGwKBuC0x9pWtA7aLCwMmBvvS0-GuaEJKCnzzAwZTrlVapu_oTo5iL4MIF6NotkduPx6ZbKxrElrXYFw28-L4UF8GzQf-pMifSpgfqgXemQHldUd4rZMSjyTD5t10cKzel73uFgH-7ZyaZa0tFHxjOXKJnx4Cokpq9nr9_A039n_eaCuiZlz3g"
-                                    alt="Powder coating facility for medical equipment"
-                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                                />
-                            </div>
-                            <div className="p-6">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-lg font-bold text-neutral-800 dark:text-white">Antimicrobial Coating Line</h3>
-                                    <span className="px-2 py-1 bg-neutral-200 dark:bg-neutral-700 text-xs font-semibold rounded text-neutral-600 dark:text-neutral-300">USA</span>
-                                </div>
-                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">Electrostatic powder coating systems applying silver-ion based antimicrobial layers to all exposed surfaces.</p>
-                                <ul className="text-xs text-neutral-500 dark:text-neutral-400 space-y-1">
-                                    <li className="flex items-center"><span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>1000h Salt Spray Test</li>
-                                    <li className="flex items-center"><span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>Eco-friendly recovery</li>
-                                </ul>
-                            </div>
-                        </StaggerItem>
-                    </StaggerContainer>
+                    {loadingCategories ? (
+                        <div className="py-12 text-center text-neutral-500 dark:text-neutral-400">Loading categories...</div>
+                    ) : (
+                        <StaggerContainer staggerDelay={0.15} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {categories.map((category) => (
+                                <StaggerItem key={category._id || category.slug}>
+                                    <ProductCategoryCard category={category} />
+                                </StaggerItem>
+                            ))}
+                        </StaggerContainer>
+                    )}
                 </div>
             </section>
 
@@ -245,17 +205,12 @@ const Infrastructure = () => {
                     <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">
                         Schedule a virtual or physical tour of our facility to see our capabilities firsthand.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link
-                            to="/contact"
-                            className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded bg-white text-primary hover:bg-neutral-100 transition-colors shadow-lg"
-                        >
-                            Request Factory Tour
-                        </Link>
-                        <a href="#" className="inline-flex items-center justify-center px-8 py-3.5 border border-white text-base font-medium rounded bg-transparent text-white hover:bg-white/10 transition-colors">
-                            Download Capacity Report
-                        </a>
-                    </div>
+                    <Link
+                        to="/contact"
+                        className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded bg-white text-primary hover:bg-neutral-100 transition-colors shadow-lg"
+                    >
+                        Contact Sales
+                    </Link>
                 </FadeIn>
             </section>
         </>

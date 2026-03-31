@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { FadeIn, SlideInLeft, SlideInRight } from '../components/ui/AnimatedSection';
 
+const initialFormData = {
+    firstName: '',
+    lastName: '',
+    hospitalName: '',
+    email: '',
+    phone: '',
+    inquiryType: 'Request for Quotation (RFQ)',
+    message: '',
+    privacy: false
+};
+
 const Contact = () => {
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        hospitalName: '',
-        email: '',
-        phone: '',
-        inquiryType: 'Request for Quotation (RFQ)',
-        message: '',
-        privacy: false
-    });
+    const [formData, setFormData] = useState(initialFormData);
     const [status, setStatus] = useState('');
 
     const handleChange = (e) => {
@@ -29,11 +31,15 @@ const Contact = () => {
             return;
         }
 
-        setStatus('Sending...');
+        const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+        const receiverEmail = import.meta.env.VITE_CONTACT_RECEIVER_EMAIL;
 
-        // Web3Forms integration
-        // const accessKey = 'YOUR_WEB3FORMS_ACCESS_KEY'; // Replace when user provides
-        const accessKey = 'YOUR_ACCESS_KEY_HERE'; // Placeholder
+        if (!accessKey) {
+            setStatus('Contact form is not configured yet.');
+            return;
+        }
+
+        setStatus('Sending...');
 
         try {
             const response = await fetch('https://api.web3forms.com/submit', {
@@ -44,7 +50,10 @@ const Contact = () => {
                 },
                 body: JSON.stringify({
                     access_key: accessKey,
+                    to_email: receiverEmail,
                     ...formData,
+                    from_name: `${formData.firstName} ${formData.lastName}`.trim(),
+                    replyto: formData.email,
                     subject: `New Inquiry from ${formData.firstName} ${formData.lastName} - ${formData.hospitalName}`
                 })
             });
@@ -52,18 +61,9 @@ const Contact = () => {
             const result = await response.json();
             if (result.success) {
                 setStatus('Message sent successfully! We will get back to you soon.');
-                setFormData({
-                    firstName: '',
-                    lastName: '',
-                    hospitalName: '',
-                    email: '',
-                    phone: '',
-                    inquiryType: 'Request for Quotation (RFQ)',
-                    message: '',
-                    privacy: false
-                });
+                setFormData(initialFormData);
             } else {
-                setStatus('Something went wrong. Please try again.');
+                setStatus(result.message || 'Something went wrong. Please try again.');
             }
         } catch (error) {
             console.error('Error submitting form:', error);

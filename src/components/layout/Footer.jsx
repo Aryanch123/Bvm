@@ -1,21 +1,35 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/images/bvmlogo.png';
+import { getCategories } from '../../services/api';
 
 const Footer = () => {
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        getCategories()
+            .then((response) => setCategories(response.data.data))
+            .catch(() => setCategories([]));
+    }, []);
+
     return (
-        <footer className="bg-white dark:bg-background-dark border-t border-neutral-200 dark:border-neutral-800 pt-16 pb-8">
+        <footer className="bg-white dark:bg-background-dark border-t border-neutral-200 dark:border-neutral-800 pt-12 pb-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
                     {/* Brand Info */}
                     <div className="col-span-1 lg:col-span-1">
-                        <Link to="/" className="flex items-center gap-2 mb-6 cursor-pointer">
-                            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center text-white">
-                                <span className="material-icons-outlined text-xl">medical_services</span>
-                            </div>
+                        <Link to="/" className="flex items-center gap-2 mb-3 cursor-pointer">
+                            <img
+                                src={logo}
+                                alt="BVM Industries"
+                                style={{ width: '80px', height: '80px' }}
+                                className="object-contain"
+                            />
                             <span className="font-bold text-xl tracking-tight text-neutral-800 dark:text-white">
-                                Med<span className="text-primary">Tech</span> Mfg.
+                                BVM<span className="text-primary">Industries</span>
                             </span>
                         </Link>
-                        <p className="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-6">
+                        <p className="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-4">
                             Pioneering medical manufacturing solutions for a safer, healthier world. Quality you can depend on, innovation you can trust.
                         </p>
                         <div className="flex space-x-4">
@@ -38,11 +52,16 @@ const Footer = () => {
                     <div>
                         <h3 className="text-sm font-bold text-neutral-800 dark:text-white uppercase tracking-wider mb-6">Products</h3>
                         <ul className="space-y-4">
-                            <li><Link to="/products" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Hospital Beds</Link></li>
-                            <li><Link to="/products" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Surgical Tables</Link></li>
-                            <li><Link to="/products" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Medical Carts</Link></li>
-                            <li><Link to="/products" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Patient Seating</Link></li>
-                            <li><Link to="/products" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Stainless Steel Furniture</Link></li>
+                            {categories.map((category) => (
+                                <li key={category._id || category.slug}>
+                                    <Link
+                                        to={`/products?category=${encodeURIComponent(category.slug || '')}`}
+                                        className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm"
+                                    >
+                                        {category.title}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
@@ -53,6 +72,7 @@ const Footer = () => {
                             <li><Link to="/about" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">About Us</Link></li>
                             <li><Link to="/certifications" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Certifications</Link></li>
                             <li><Link to="/infrastructure" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Manufacturing Process</Link></li>
+                            <li><Link to="/gallery" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Gallery</Link></li>
                             <li><Link to="/contact" className="text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors text-sm">Contact</Link></li>
                         </ul>
                     </div>
@@ -80,9 +100,9 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="border-t border-neutral-100 dark:border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="border-t border-neutral-100 dark:border-neutral-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-neutral-400 text-xs text-center md:text-left">
-                        © {new Date().getFullYear()} MedTech Manufacturing Inc. All rights reserved.
+                        © {new Date().getFullYear()} BVM Industries. All rights reserved.
                     </p>
                     <div className="flex space-x-6">
                         <a href="#" className="text-neutral-400 hover:text-primary text-xs transition-colors">Privacy Policy</a>

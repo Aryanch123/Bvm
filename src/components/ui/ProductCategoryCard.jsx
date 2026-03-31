@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 
 const ProductCategoryCard = ({ category }) => {
+    const imageUrl = category.image?.url || category.image;
+
     return (
         <div className="group relative bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-soft">
             <div className="aspect-[4/3] w-full overflow-hidden bg-neutral-100">
                 <img
-                    src={category.image}
+                    src={imageUrl}
                     alt={category.title}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 />
@@ -16,7 +18,7 @@ const ProductCategoryCard = ({ category }) => {
                     {category.description}
                 </p>
                 <Link
-                    to="/products"
+                    to={`/products?category=${encodeURIComponent(category.slug || '')}`}
                     className="inline-flex items-center text-sm font-semibold text-primary group-hover:text-primary-dark"
                 >
                     Explore Products <span className="material-icons-outlined ml-1 text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
