@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FadeIn, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
 import ProductCategoryCard from '../components/ui/ProductCategoryCard';
 import { getCategories } from '../services/api';
-import infrastructureImage from '../assets/images/image-1.jpg';
+import infrastructureImage from '../assets/images/Image-1.jpg';
 
 const Infrastructure = () => {
     const [categories, setCategories] = useState([]);
