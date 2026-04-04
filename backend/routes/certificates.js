@@ -5,8 +5,17 @@ const { protect } = require('../middleware/auth');
 const { cloudinary } = require('../config/cloudinary');
 
 const router = express.Router();
-
-const upload = multer({ storage: multer.memoryStorage() });
+const IMAGE_MIME_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: Number(process.env.MAX_CERTIFICATE_UPLOAD_BYTES || 10 * 1024 * 1024) },
+    fileFilter: (req, file, cb) => {
+        if (!IMAGE_MIME_TYPES.has(file.mimetype)) {
+            return cb(new Error('Certificate uploads must be JPG, PNG, or WEBP images.'));
+        }
+        cb(null, true);
+    },
+});
 
 const uploadFields = upload.fields([
     { name: 'pdf', maxCount: 1 },

@@ -231,7 +231,7 @@ const Contact = () => {
                                             </div>
                                             <div>
                                                 <p className="font-medium text-neutral-800 dark:text-white">BVM Industries</p>
-                                                <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-1">A Moja Chalesar<br />Janpad Shadhra<br />Agra Uttar Pradesh 282006<br />India</p>
+                                                <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-1">13A Moja Chalesar<br />Janpad Shadhra<br />Agra Uttar Pradesh 282006<br />India</p>
                                             </div>
                                         </div>
 
@@ -241,7 +241,7 @@ const Contact = () => {
                                             </div>
                                             <div>
                                                 <p className="font-medium text-neutral-800 dark:text-white">Direct Line</p>
-                                                <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-1">+91 (Phone number to be added)</p>
+                                                <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-1">+91 7456972711</p>
                                             </div>
                                         </div>
 
@@ -251,7 +251,7 @@ const Contact = () => {
                                             </div>
                                             <div>
                                                 <p className="font-medium text-neutral-800 dark:text-white">Email Support</p>
-                                                <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-1">contact@bvmindustries.com</p>
+                                                <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-1">bvmindustriesagra@gmail.com</p>
                                             </div>
                                         </div>
                                     </div>
@@ -270,7 +270,7 @@ const Contact = () => {
                                 <div className="rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-700 shadow-soft h-64 lg:h-80 bg-neutral-100 dark:bg-neutral-800 relative group">
                                     <iframe
                                         title="Headquarters Map"
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.733248043701!2d-118.40035632362156!3d34.05071311773143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2bb7956377e0d%3A0x629134a6943b5937!2sBeverly%20Hills%2C%20CA%2090210!5e0!3m2!1sen!2sus!4v1714999999999!5m2!1sen!2sus"
+                                        src="https://www.google.com/maps?q=A%20Moja%20Chalesar%2C%20Janpad%20Shadhra%2C%20Agra%2C%20Uttar%20Pradesh%20282006%2C%20India&z=16&output=embed"
                                         className="w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500 border-0"
                                         allowFullScreen=""
                                         loading="lazy"
@@ -278,7 +278,12 @@ const Contact = () => {
                                     ></iframe>
                                 </div>
 
-                                <a href="https://wa.me/YOUR_NUMBER" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full px-6 py-4 border border-transparent text-base font-bold rounded-xl bg-[#25D366] text-white hover:bg-[#128C7E] transition-all shadow-md hover:shadow-lg group">
+                                <a href="https://wa.me/917456972711" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full px-6 py-4 border border-transparent text-base font-bold rounded-xl bg-[#25D366] text-white hover:bg-[#128C7E] transition-all shadow-md hover:shadow-lg group">
+                                    <svg className="w-6 h-6 mr-3" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                                        <path d="M19.11 17.21c-.29-.15-1.72-.85-1.98-.95-.27-.1-.46-.15-.65.15-.19.29-.75.94-.92 1.13-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.33-1.44-.86-.76-1.45-1.7-1.62-1.99-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.15-.17.19-.29.29-.49.1-.19.05-.37-.03-.51-.07-.15-.65-1.57-.89-2.15-.23-.56-.47-.48-.65-.49h-.56c-.19 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.44s1.05 2.84 1.19 3.03c.15.19 2.05 3.13 4.97 4.39.69.3 1.23.48 1.65.62.69.22 1.32.19 1.82.12.56-.08 1.72-.7 1.96-1.37.24-.67.24-1.24.17-1.37-.07-.12-.26-.19-.56-.34Z" />
+                                        <path d="M16 3C8.82 3 3 8.82 3 16c0 2.29.6 4.53 1.73 6.5L3 29l6.68-1.69A12.94 12.94 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3Zm0 23.64c-2.01 0-3.98-.54-5.71-1.57l-.41-.24-3.96 1 1.06-3.86-.26-.4A10.58 10.58 0 0 1 5.36 16C5.36 10.11 10.11 5.36 16 5.36S26.64 10.11 26.64 16 21.89 26.64 16 26.64Z" />
+                                    </svg>
+                                    Chat on WhatsApp
                                 </a>
                             </SlideInRight>
 

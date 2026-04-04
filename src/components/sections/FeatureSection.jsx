@@ -1,4 +1,5 @@
 import { FadeIn, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from '../ui/AnimatedSection';
+import homeFeatureImage from '../../assets/images/imag2.jpeg';
 
 const FeatureSection = () => {
     return (
@@ -8,7 +9,7 @@ const FeatureSection = () => {
                     {/* Content */}
                     <SlideInLeft delay={0.1}>
                         <div>
-                            <span className="text-primary font-semibold tracking-wide uppercase text-sm mb-2 block">
+                            <span className="text-primary font-semibold tracking-wide text-sm mb-2 block">
                                 Highlights and USPs
                             </span>
                             <h2 className="text-3xl md:text-4xl font-bold text-neutral-800 dark:text-white mb-8">
@@ -77,9 +78,9 @@ const FeatureSection = () => {
                         <div className="relative hidden lg:block">
                             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-neutral-200 dark:border-neutral-700">
                                 <img
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVbBj8EDHBq776Iobs8sYuvuzE84hS0PrBYJLb_TNrBPvcOZw7_f1eYA0TK4sWefEnQM-jUMxAJvWF1yTm29sKO6LzbcZynVllVd5Bu4GSpnkGLXWjUo2-pJNt4w7OpcM0Z40Lkcb3cec_EdjAmgEHk129gsEAPDtKIQ5MdPOGbXeS0u90OFlRLR-WTzJypzAGnAuGN08qqwnkFQGSJYtklxulfKFiwwI5tZq-_JLWsr2lsziIFOXNi-R9RFC37uzOBHxaCLgEPBw"
+                                    src={homeFeatureImage}
                                     alt="Detail shot of high tech medical equipment interface"
-                                    className="w-full h-auto object-cover"
+                                    className="w-full h-96 object-cover"
                                 />
                                 {/* Floating Stat Card */}
                                 <FadeIn delay={0.5} className="absolute bottom-8 left-8 bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-xl max-w-xs border-l-4 border-primary">

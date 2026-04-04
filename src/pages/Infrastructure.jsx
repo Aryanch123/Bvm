@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FadeIn, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
 import ProductCategoryCard from '../components/ui/ProductCategoryCard';
 import { getCategories } from '../services/api';
+import infrastructureImage from '../assets/images/image-1.jpg';
 
 const Infrastructure = () => {
     const [categories, setCategories] = useState([]);
@@ -54,7 +55,7 @@ const Infrastructure = () => {
                     </SlideInLeft>
                     <FadeIn delay={0.2} duration={1} className="relative h-96 lg:h-auto w-full order-1 lg:order-2">
                         <img
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVbBj8EDHBq776Iobs8sYuvuzE84hS0PrBYJLb_TNrBPvcOZw7_f1eYA0TK4sWefEnQM-jUMxAJvWF1yTm29sKO6LzbcZynVllVd5Bu4GSpnkGLXWjUo2-pJNt4w7OpcM0Z40Lkcb3cec_EdjAmgEHk129gsEAPDtKIQ5MdPOGbXeS0u90OFlRLR-WTzJypzAGnAuGN08qqwnkFQGSJYtklxulfKFiwwI5tZq-_JLWsr2lsziIFOXNi-R9RFC37uzOBHxaCLgEPBw"
+                            src={infrastructureImage}
                             alt="Modern automated manufacturing line for medical devices"
                             className="w-full h-full object-cover object-center"
                         />

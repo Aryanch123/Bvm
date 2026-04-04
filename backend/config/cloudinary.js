@@ -2,6 +2,14 @@ const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
 
+const IMAGE_MIME_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+const createImageFileFilter = () => (req, file, cb) => {
+    if (!IMAGE_MIME_TYPES.has(file.mimetype)) {
+        return cb(new Error('Only JPG, PNG, and WEBP image uploads are allowed.'));
+    }
+    cb(null, true);
+};
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -58,9 +66,21 @@ const certificateImageStorage = new CloudinaryStorage({
     },
 });
 
-const uploadProductImages = multer({ storage: productStorage });
-const uploadCategoryImage = multer({ storage: categoryStorage });
-const uploadSiteImage = multer({ storage: siteImageStorage });
+const uploadProductImages = multer({
+    storage: productStorage,
+    limits: { fileSize: Number(process.env.MAX_IMAGE_UPLOAD_BYTES || 8 * 1024 * 1024) },
+    fileFilter: createImageFileFilter(),
+});
+const uploadCategoryImage = multer({
+    storage: categoryStorage,
+    limits: { fileSize: Number(process.env.MAX_IMAGE_UPLOAD_BYTES || 8 * 1024 * 1024) },
+    fileFilter: createImageFileFilter(),
+});
+const uploadSiteImage = multer({
+    storage: siteImageStorage,
+    limits: { fileSize: Number(process.env.MAX_SITE_IMAGE_UPLOAD_BYTES || 10 * 1024 * 1024) },
+    fileFilter: createImageFileFilter(),
+});
 const uploadCertificatePdf = multer({ storage: certificatePdfStorage });
 const uploadCertificateImage = multer({ storage: certificateImageStorage });
 

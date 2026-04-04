@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/sections/HeroSection';
-import TrustIndicators from '../components/sections/TrustIndicators';
+// import TrustIndicators from '../components/sections/TrustIndicators';
 import TrustedInstitutions from '../components/sections/TrustedInstitutions';
 import FeatureSection from '../components/sections/FeatureSection';
 import CTASection from '../components/sections/CTASection';
@@ -22,7 +22,7 @@ const Home = () => {
     return (
         <>
             <HeroSection />
-            <TrustIndicators />
+            {/* <TrustIndicators /> */}
 
             {/* Product Categories Section */}
             <section className="py-24 bg-background-light dark:bg-background-dark">

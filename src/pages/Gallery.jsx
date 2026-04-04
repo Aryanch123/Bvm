@@ -125,9 +125,9 @@ const Gallery = () => {
                         Schedule a virtual or in-person tour of our manufacturing facilities to see our processes firsthand.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="#" className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded bg-white text-primary hover:bg-neutral-100 transition-colors shadow-lg">
+                        {/* <a href="#" className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded bg-white text-primary hover:bg-neutral-100 transition-colors shadow-lg">
                             Book a Factory Tour
-                        </a>
+                        </a> */}
                         <Link to="/contact" className="inline-flex items-center justify-center px-8 py-3.5 border border-white text-base font-medium rounded bg-transparent text-white hover:bg-white/10 transition-colors">
                             Contact Sales
                         </Link>

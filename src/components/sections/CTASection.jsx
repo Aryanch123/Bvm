@@ -15,19 +15,13 @@ const CTASection = () => {
                 <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">
                     Contact our sales team for a consultation and discover how our manufacturing solutions can fit your specific clinical needs.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex justify-center">
                     <Link
                         to="/contact"
                         className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded bg-white text-primary hover:bg-neutral-100 transition-colors shadow-lg"
                     >
                         Request a Quote
                     </Link>
-                    <a
-                        href="#"
-                        className="inline-flex items-center justify-center px-8 py-3.5 border border-white text-base font-medium rounded bg-transparent text-white hover:bg-white/10 transition-colors"
-                    >
-                        Download Brochure
-                    </a>
                 </div>
             </FadeIn>
         </section>
