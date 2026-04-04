@@ -247,7 +247,7 @@ const About = () => {
                             Contact Our Team
                         </Link>
                         {/* <a href="#" className="inline-flex items-center justify-center px-8 py-3.5 border border-white text-base font-medium rounded bg-transparent text-white hover:bg-white/10 transition-colors">
-                            Download Company Profile
+                            Download Company  Profile
                         </a> */}
                     </div>
                 </FadeIn>
