@@ -17,9 +17,9 @@ const Navbar = () => {
     return (
         <nav className="fixed w-full z-50 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-neutral-200 dark:border-neutral-800 transition-all duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-20 items-center">
+                <div className="relative flex h-20 items-center justify-between">
                     {/* Logo */}
-                    <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <Link to="/" className="hidden md:flex flex-shrink-0 items-center gap-2 cursor-pointer">
                         <img
                             src={logo}
                             alt="BVM Industries"
@@ -28,6 +28,21 @@ const Navbar = () => {
                         />
                         <span className="font-bold text-xl tracking-tight text-neutral-800 dark:text-white">
                             BVM<span className="text-primary">Industries</span> 
+                        </span>
+                    </Link>
+
+                    <Link
+                        to="/"
+                        className="md:hidden absolute left-9 flex items-center gap-2 cursor-pointer"
+                    >
+                        <img
+                            src={logo}
+                            alt="BVM Industries"
+                            style={{ width: '72px', height: '72px' }}
+                            className="object-contain"
+                        />
+                        <span className="font-bold text-lg tracking-tight text-neutral-800 dark:text-white whitespace-nowrap">
+                            BVM<span className="text-primary">Industries</span>
                         </span>
                     </Link>
 
@@ -60,7 +75,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="flex items-center md:hidden">
+                    <div className="flex items-center md:hidden ml-auto">
                         <button
                             onClick={toggleMenu}
                             className="text-neutral-600 dark:text-neutral-300 hover:text-primary focus:outline-none"

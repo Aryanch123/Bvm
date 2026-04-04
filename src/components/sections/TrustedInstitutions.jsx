@@ -1,12 +1,20 @@
-import { useState, useEffect } from 'react';
 import { FadeIn, SlideInLeft } from '../ui/AnimatedSection';
 
-// Generate array of 21 asset objects
-const logos = Array.from({ length: 21 }, (_, i) => ({
-    id: i + 1,
-    src: `/src/assets/images/asset${i + 1}.jpeg`,
-    alt: `Trusted Institution ${i + 1}`
-}));
+const logoImports = import.meta.glob('../../assets/images/asset*.jpeg', {
+    eager: true,
+    import: 'default',
+});
+
+const logos = Object.entries(logoImports)
+    .map(([path, src]) => {
+        const match = path.match(/asset(\d+)\.jpeg$/i);
+        return {
+            id: match ? Number(match[1]) : 0,
+            src,
+            alt: match ? `Trusted Institution ${match[1]}` : 'Trusted Institution',
+        };
+    })
+    .sort((a, b) => a.id - b.id);
 
 const TrustedInstitutions = () => {
     return (

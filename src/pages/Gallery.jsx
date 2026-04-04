@@ -71,7 +71,15 @@ const Gallery = () => {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                                     <span className="text-primary-light text-xs font-bold uppercase tracking-wider mb-1 text-primary">{image.category}</span>
                                     <h3 className="text-white font-bold text-lg">{image.title}</h3>
-                                    <button className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/40 transition-colors">
+                                    <button
+                                        type="button"
+                                        aria-label={`Open ${image.alt} in lightbox`}
+                                        onClick={(event) => {
+                                            event.stopPropagation();
+                                            setSelectedImage(image);
+                                        }}
+                                        className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/40 transition-colors"
+                                    >
                                         <span className="material-icons-outlined text-xl">open_in_full</span>
                                     </button>
                                 </div>
@@ -81,11 +89,11 @@ const Gallery = () => {
 
                     </StaggerContainer>
 
-                    <div className="mt-12 text-center">
+                    {/* <div className="mt-12 text-center">
                         <button className="inline-flex items-center justify-center px-8 py-3 border border-neutral-300 dark:border-neutral-600 text-sm font-medium rounded bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-700 hover:text-primary dark:hover:text-primary transition-all hover:border-primary/50 shadow-sm">
                             <span className="material-icons-outlined mr-2">refresh</span> Load More Images
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </section>
 
@@ -106,11 +114,6 @@ const Gallery = () => {
                             <div>
                                 <span className="text-primary text-xs font-bold uppercase tracking-wider mb-1 block">{selectedImage.category}</span>
                                 <h3 className="text-xl font-bold text-neutral-800 dark:text-white">{selectedImage.title}</h3>
-                            </div>
-                            <div className="flex gap-4">
-                                <button className="p-2 text-neutral-500 hover:text-primary transition-colors" title="Download">
-                                    <span className="material-icons-outlined">download</span>
-                                </button>
                             </div>
                         </div>
                     </div>
