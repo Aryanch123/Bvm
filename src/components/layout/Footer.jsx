@@ -106,7 +106,7 @@ const Footer = () => {
 
                 <div className="border-t border-neutral-100 dark:border-neutral-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-neutral-400 text-xs text-center md:text-left">
-                        &copy; {new Date().getFullYear()} BVM Industries. All rights reserved.
+                        &copy; {new Date().getFullYear()} BVM Industries. All rights reserved.Developed by Graptix Tech.
                     </p>
                 </div>
             </div>
