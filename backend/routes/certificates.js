@@ -136,7 +136,7 @@ router.put('/:id', protect, uploadFields, async (req, res) => {
     res.json({ success: true, data: cert });
 });
 
-// DELETE /api/certificates/:id
+// DELETE /api/certificates/: id
 router.delete('/:id', protect, async (req, res) => {
     const cert = await Certificate.findById(req.params.id);
     if (!cert) return res.status(404).json({ success: false, message: 'Not found.' });
