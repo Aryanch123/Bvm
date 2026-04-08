@@ -58,6 +58,16 @@ app.use('/api/products', productRoutes);
 app.use('/api/site-images', siteImageRoutes);
 app.use('/api/certificates', certificateRoutes);
 
+const sendHeartbeat = (req, res) => {
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).type('text/plain').send('OK');
+};
+
+app.get('/healthz', sendHeartbeat);
+app.head('/healthz', sendHeartbeat);
+app.get('/cron', sendHeartbeat);
+app.head('/cron', sendHeartbeat);
+
 app.get('/', (req, res) => res.json({ message: 'BVM Industries API is running.' }));
 
 app.use((err, req, res, next) => {
@@ -70,13 +80,28 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => {
+const mongoUri = process.env.MONGO_URI;
+const mongoServerSelectionTimeoutMs = Number(process.env.MONGO_SERVER_SELECTION_TIMEOUT_MS || 5000);
+const mongoRetryDelayMs = Number(process.env.MONGO_RETRY_DELAY_MS || 5000);
+
+mongoose.set('bufferCommands', false);
+
+const connectMongo = async () => {
+    if (!mongoUri) {
+        console.error('MONGO_URI is not set. API routes that need MongoDB will not work.');
+        return;
+    }
+
+    try {
+        await mongoose.connect(mongoUri, {
+            serverSelectionTimeoutMS: mongoServerSelectionTimeoutMs,
+        });
         console.log('MongoDB connected');
-        app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-    })
-    .catch((err) => {
+    } catch (err) {
         console.error('MongoDB connection error:', err.message);
-        process.exit(1);
-    });
+        setTimeout(connectMongo, mongoRetryDelayMs);
+    }
+};
+
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+connectMongo();
