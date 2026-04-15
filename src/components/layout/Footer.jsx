@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/images/bvmlogo.png';
+import logo from '../../assets/images/bvmlogo1.png';
 import { getCategories } from '../../services/api';
 
 const Footer = () => {
@@ -21,7 +21,7 @@ const Footer = () => {
                             <img
                                 src={logo}
                                 alt="BVM Industries"
-                                style={{ width: '92px', height: '92px' }}
+                                style={{ width: '110px', height: '130px' }}
                                 className="object-contain"
                             />
                             <span className="font-bold text-xl tracking-tight text-neutral-800 dark:text-white">
@@ -106,7 +106,7 @@ const Footer = () => {
 
                 <div className="border-t border-neutral-100 dark:border-neutral-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-neutral-400 text-xs text-center md:text-left">
-                        &copy; {new Date().getFullYear()} BVM Industries. All rights reserved.Developed by Graptix Tech.
+                        &copy; {new Date().getFullYear()} BVM Industries. All rights reserved.Developed by <a href="https://graptix.in/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">Graptix Tech.</a>
                     </p>
                 </div>
             </div>

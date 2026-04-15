@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '../../assets/images/bvmlogo.png';
+import logo from '../../assets/images/bvmlogo1.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +23,7 @@ const Navbar = () => {
                         <img
                             src={logo}
                             alt="BVM Industries"
-                            style={{ width: '72px', height: '72px' }}
+                            style={{ width: '90px', height: '90px' }}
                             className="object-contain"
                         />
                         <span className="font-bold text-xl tracking-tight text-neutral-800 dark:text-white">
